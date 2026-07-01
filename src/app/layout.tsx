@@ -3,7 +3,7 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
-import WhatsAppButton from "@/components/whatsapp-button"
+import ChatBot from "@/components/chat/chat-bot"
 
 export const metadata: Metadata = {
   title: {
@@ -53,7 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />
-          <WhatsAppButton />
+          <ChatBot />
         </ThemeProvider>
       </body>
     </html>

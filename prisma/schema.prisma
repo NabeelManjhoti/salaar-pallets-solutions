@@ -26,3 +26,14 @@ model ContactInquiry {
   isReplied       Boolean  @default(false)
   createdAt       DateTime @default(now())
 }
+
+model ContentChunk {
+  id        String                 @id @default(cuid())
+  content   String
+  slug      String?
+  category  String?
+  createdAt DateTime               @default(now())
+  embedding Unsupported("vector")?
+
+  @@index([embedding], map: "idx_content_chunk_embedding")
+}
