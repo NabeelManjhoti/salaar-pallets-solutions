@@ -177,7 +177,7 @@ export default function ContactClient() {
 
               <div className="rounded-2xl overflow-hidden border border-[var(--border)] h-[300px]">
                 <iframe
-                  src="https://maps.google.com/maps?q=Baldia+Town+4%2F5+Timber+Market+Karachi+Pakistan&output=embed"
+                  src="https://maps.google.com/maps?q=24.9080086,66.9642382&z=17&output=embed"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
