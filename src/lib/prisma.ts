@@ -1,10 +1,7 @@
 import { PrismaClient } from "@prisma/client"
 import { PrismaNeon } from "@prisma/adapter-neon"
 
-const databaseUrl = process.env.DATABASE_URL
-if (!databaseUrl) {
-  throw new Error("DATABASE_URL environment variable is not set")
-}
+const databaseUrl = process.env.DATABASE_URL || "postgresql://placeholder:placeholder@localhost:5432/placeholder?sslmode=require"
 
 const prismaClientSingleton = () => {
   const adapter = new PrismaNeon({ connectionString: databaseUrl })

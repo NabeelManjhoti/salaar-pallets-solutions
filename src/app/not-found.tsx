@@ -3,13 +3,18 @@ import Link from "next/link"
 export default function NotFound() {
   return (
     <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 text-center">
-      <h1 className="font-display text-6xl font-bold text-wood-500 mb-4">404</h1>
-      <p className="text-lg text-[var(--text-secondary)] mb-6">Page not found</p>
+      <div className="font-mono text-3xl sm:text-4xl font-semibold text-neutral-400 mb-2">404</div>
+      <h1 className="text-xl sm:text-2xl font-semibold tracking-tight text-[var(--text)] mb-3">
+        Specification Sheet Not Found
+      </h1>
+      <p className="text-xs sm:text-sm text-[var(--text-secondary)] mb-6 max-w-sm">
+        The pallet catalog page or article you requested does not exist or has been relocated in our inventory.
+      </p>
       <Link
         href="/"
-        className="inline-flex items-center gap-2 bg-wood-600 hover:bg-wood-700 text-white font-semibold px-6 py-3 rounded-xl transition-all"
+        className="inline-flex items-center gap-2 bg-wood-600 hover:bg-wood-500 text-white font-medium text-xs sm:text-sm px-4 py-2 rounded-lg transition-colors"
       >
-        Go Home
+        Return to Catalog
       </Link>
     </div>
   )

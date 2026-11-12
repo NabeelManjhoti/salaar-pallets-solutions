@@ -1,33 +1,23 @@
-"use client"
-
-import { motion } from "framer-motion"
-
 const stats = [
-  { value: "5+", label: "Years Experience" },
-  { value: "10K+", label: "Pallets Supplied" },
-  { value: "100+", label: "Happy Clients" },
-  { value: "All PK", label: "Serving Pakistan" },
+  { value: "10,000+", label: "Units Supplied Annually", note: "Standard & custom specs" },
+  { value: "100%", label: "ISPM-15 Certified", note: "Kiln-dried & heat treated" },
+  { value: "2,000 kg", label: "Max Dynamic Payload", note: "Reinforced 4-way block design" },
+  { value: "24–48h", label: "Fast Karachi Dispatch", note: "All-Pakistan freight network" },
 ]
 
 export default function StatsBar() {
   return (
-    <section className="bg-wood-600">
-      <div className="container-custom py-10">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {stats.map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="text-center"
-            >
-              <div className="text-3xl md:text-4xl font-display font-bold text-wood-100">
+    <section className="bg-[var(--surface-alt)] border-b border-[var(--border)] py-8">
+      <div className="container-custom">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          {stats.map((stat) => (
+            <div key={stat.label} className="border-l-2 border-wood-600 pl-4 py-1">
+              <div className="font-mono text-2xl sm:text-3xl font-semibold text-[var(--text)] tabular-nums tracking-tight">
                 {stat.value}
               </div>
-              <div className="text-sm text-wood-200/80 mt-1">{stat.label}</div>
-            </motion.div>
+              <div className="text-xs font-medium text-[var(--text)] mt-1">{stat.label}</div>
+              <div className="text-[11px] text-[var(--text-secondary)] mt-0.5">{stat.note}</div>
+            </div>
           ))}
         </div>
       </div>

@@ -1,41 +1,37 @@
-"use client"
-
-import { motion } from "framer-motion"
 import Link from "next/link"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, MessageSquare } from "lucide-react"
 
 export default function CTASection() {
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-r from-wood-600 to-forest-600">
-      <div className="container-custom text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">
-            Ready to Get Started?
+    <section className="py-16 md:py-20 bg-[#121316] text-neutral-100 border-t border-neutral-800">
+      <div className="container-custom">
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-wood-400 mb-3 font-semibold">
+            Direct Mill Quotations · Baldia Town Facility
+          </div>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-white mb-4">
+            Request a Pallet Supply or Scrap Buyback Quotation
           </h2>
-          <p className="text-wood-100/80 max-w-xl mx-auto mb-8">
-            Whether you need new pallets, custom sizes, repair services, or want to sell your old pallets — we&apos;re here to help.
+          <p className="text-sm sm:text-base text-neutral-400 leading-relaxed mb-8 max-w-xl mx-auto">
+            Direct mill pricing, certified ISPM-15 heat treatment documentation, and dedicated flatbed delivery across Pakistan. Contact our Karachi team today.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center items-center gap-3">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 bg-white text-wood-700 font-semibold px-6 py-3 rounded-xl hover:bg-wood-50 transition-all"
+              className="inline-flex items-center gap-2 bg-wood-600 hover:bg-wood-500 text-white font-medium text-sm px-5 py-2.5 rounded-lg transition-colors"
             >
-              Contact Us <ArrowRight size={18} />
+              Request Commercial Quote <ArrowRight size={16} />
             </Link>
             <a
-              href="https://wa.me/923338538388?text=Hi%20Salaar%20Pallet%20Solutions!"
+              href="https://wa.me/923338538388?text=Hi%20Salaar%20Pallet%20Solutions!%20I%20need%20a%20pallet%20quotation."
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 border border-white/30 text-white font-medium px-6 py-3 rounded-xl hover:bg-white/10 transition-all"
+              className="inline-flex items-center gap-2 border border-neutral-700 hover:border-neutral-600 bg-neutral-900/80 hover:bg-neutral-800 text-neutral-300 font-medium text-sm px-5 py-2.5 rounded-lg transition-colors"
             >
-              WhatsApp Us
+              <MessageSquare size={16} /> WhatsApp Factory Team
             </a>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

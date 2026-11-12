@@ -49,32 +49,32 @@ export default function AdminInquiriesClient({ inquiries: initial }: { inquiries
   return (
     <div className="min-h-screen bg-[var(--surface-alt)]">
       <div className="container-custom py-8">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between mb-8 pb-4 border-b border-[var(--border)]">
           <div>
-            <h1 className="font-display text-2xl font-bold text-wood-600 dark:text-wood-300">Inquiries</h1>
-            <p className="text-sm text-[var(--text-secondary)]">{inquiries.length} total inquiries</p>
+            <h1 className="text-xl sm:text-2xl font-semibold tracking-tight text-[var(--text)]">Commercial Inquiries</h1>
+            <p className="text-xs text-[var(--text-secondary)] mt-0.5">{inquiries.length} total customer submissions</p>
           </div>
           <button
             onClick={handleLogout}
-            className="inline-flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-red-500 px-3 py-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-all"
+            className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--text-secondary)] hover:text-red-500 px-3 py-1.5 rounded-lg border border-[var(--border)] bg-[var(--bg)] transition-colors"
           >
-            <LogOut size={16} /> Logout
+            <LogOut size={14} /> Log out
           </button>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="space-y-3 max-h-[80vh] overflow-y-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div className="lg:col-span-5 space-y-2.5 max-h-[75vh] overflow-y-auto">
             {inquiries.length === 0 ? (
-              <p className="text-[var(--text-secondary)] text-center py-12">No inquiries yet.</p>
+              <p className="text-[var(--text-secondary)] text-xs text-center py-12">No inquiries yet.</p>
             ) : (
               inquiries.map((inquiry) => (
                 <button
                   key={inquiry.id}
                   onClick={() => setSelected(inquiry)}
-                  className={`w-full text-left p-4 rounded-xl border transition-all ${
+                  className={`w-full text-left p-3.5 rounded-xl border transition-colors ${
                     selected?.id === inquiry.id
-                      ? "border-wood-300 dark:border-forest-600 bg-wood-50 dark:bg-forest-900/20"
-                      : "border-[var(--border)] bg-[var(--bg)] hover:border-wood-200 dark:hover:border-forest-700"
+                      ? "border-neutral-400 dark:border-neutral-600 bg-[var(--bg)] shadow-xs"
+                      : "border-[var(--border)] bg-[var(--bg)] hover:border-neutral-300 dark:hover:border-neutral-700"
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2 mb-1">
@@ -82,21 +82,25 @@ export default function AdminInquiriesClient({ inquiries: initial }: { inquiries
                       {inquiry.isRead ? (
                         <MailOpen size={14} className="text-[var(--text-secondary)]" />
                       ) : (
-                        <Mail size={14} className="text-wood-500" />
+                        <Mail size={14} className="text-wood-600" />
                       )}
-                      <span className="font-medium text-sm text-[var(--text)]">{inquiry.name}</span>
+                      <span className="font-semibold text-xs sm:text-sm text-[var(--text)]">{inquiry.name}</span>
                     </div>
-                    <span className="text-xs text-[var(--text-secondary)]">
+                    <span className="font-mono text-[11px] text-[var(--text-secondary)]">
                       {new Date(inquiry.createdAt).toLocaleDateString()}
                     </span>
                   </div>
-                  <p className="text-xs text-[var(--text-secondary)] truncate pl-6">{inquiry.message}</p>
-                  <div className="flex gap-2 mt-2 pl-6">
+                  <p className="text-xs text-[var(--text-secondary)] truncate pl-5.5">{inquiry.message}</p>
+                  <div className="flex gap-2 mt-2 pl-5.5">
                     {!inquiry.isRead && (
-                      <span className="text-[10px] font-medium text-wood-500 bg-wood-100 dark:bg-forest-900 dark:text-forest-300 px-2 py-0.5 rounded-full">New</span>
+                      <span className="font-mono text-[10px] font-medium text-wood-700 dark:text-wood-300 bg-wood-100 dark:bg-wood-950 px-1.5 py-0.5 rounded border border-wood-200 dark:border-wood-800">
+                        NEW
+                      </span>
                     )}
                     {inquiry.isReplied && (
-                      <span className="text-[10px] font-medium text-forest-500 bg-forest-100 dark:bg-forest-900 dark:text-forest-300 px-2 py-0.5 rounded-full">Replied</span>
+                      <span className="font-mono text-[10px] font-medium text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950 px-1.5 py-0.5 rounded border border-emerald-200 dark:border-emerald-800">
+                        REPLIED
+                      </span>
                     )}
                   </div>
                 </button>
@@ -104,62 +108,66 @@ export default function AdminInquiriesClient({ inquiries: initial }: { inquiries
             )}
           </div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg)] p-6 min-h-[400px]">
+          <div className="lg:col-span-7 rounded-xl border border-[var(--border)] bg-[var(--bg)] p-6 min-h-[450px]">
             {selected ? (
               <div>
-                <div className="flex items-start justify-between mb-4">
+                <div className="flex items-start justify-between mb-4 pb-4 border-b border-[var(--border)]">
                   <div>
-                    <h2 className="font-display text-xl font-semibold text-wood-600 dark:text-wood-300">{selected.name}</h2>
-                    <p className="text-sm text-[var(--text-secondary)]">{selected.email} | {selected.phone}</p>
+                    <h2 className="text-lg font-semibold tracking-tight text-[var(--text)]">{selected.name}</h2>
+                    <p className="text-xs text-[var(--text-secondary)] mt-0.5">{selected.email} · {selected.phone}</p>
                     {selected.company && (
-                      <p className="text-sm text-[var(--text-secondary)]">Company: {selected.company}</p>
+                      <p className="text-xs text-[var(--text)] font-medium mt-1">Company: {selected.company}</p>
                     )}
                   </div>
-                  <span className="text-xs text-[var(--text-secondary)]">
+                  <span className="font-mono text-[11px] text-[var(--text-secondary)]">
                     {new Date(selected.createdAt).toLocaleString()}
                   </span>
                 </div>
 
                 {selected.serviceInterest && (
                   <div className="mb-4">
-                    <span className="text-xs font-medium text-wood-500 dark:text-forest-400 uppercase tracking-wider">Interested In</span>
-                    <p className="text-sm text-[var(--text)] capitalize">{selected.serviceInterest.replace("-", " ")}</p>
+                    <span className="font-mono text-[11px] text-[var(--text-secondary)] uppercase">Requirement Category</span>
+                    <p className="text-xs sm:text-sm text-[var(--text)] font-medium capitalize mt-0.5">
+                      {selected.serviceInterest.replace("-", " ")}
+                    </p>
                   </div>
                 )}
 
                 <div className="mb-6">
-                  <span className="text-xs font-medium text-wood-500 dark:text-forest-400 uppercase tracking-wider">Message</span>
-                  <p className="text-sm text-[var(--text)] mt-1 whitespace-pre-wrap">{selected.message}</p>
+                  <span className="font-mono text-[11px] text-[var(--text-secondary)] uppercase">Client Message</span>
+                  <p className="text-xs sm:text-sm text-[var(--text)] mt-1 whitespace-pre-wrap leading-relaxed p-3.5 rounded-lg bg-[var(--surface-alt)] border border-[var(--border)] font-mono">
+                    {selected.message}
+                  </p>
                 </div>
 
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 pt-4 border-t border-[var(--border)]">
                   {!selected.isRead && (
                     <button
                       onClick={() => handleMarkRead(selected.id)}
-                      className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-wood-100 text-wood-600 dark:bg-forest-900 dark:text-forest-300 hover:bg-wood-200 dark:hover:bg-forest-800 transition-all"
+                      className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface-alt)] hover:bg-[var(--bg)] transition-colors"
                     >
-                      <MailOpen size={14} /> Mark as Read
+                      <MailOpen size={13} /> Mark Read
                     </button>
                   )}
                   {!selected.isReplied && (
                     <button
                       onClick={() => handleMarkReplied(selected.id)}
-                      className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-forest-100 text-forest-600 dark:bg-forest-900 dark:text-forest-300 hover:bg-forest-200 dark:hover:bg-forest-800 transition-all"
+                      className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-emerald-600 text-white hover:bg-emerald-500 transition-colors"
                     >
-                      <CheckCheck size={14} /> Mark as Replied
+                      <CheckCheck size={13} /> Mark Replied
                     </button>
                   )}
                   <button
                     onClick={() => handleDelete(selected.id)}
-                    className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-red-50 text-red-600 dark:bg-red-900/20 dark:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/40 transition-all"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
                   >
-                    <Trash2 size={14} /> Delete
+                    <Trash2 size={13} /> Delete
                   </button>
                 </div>
               </div>
             ) : (
-              <div className="flex items-center justify-center h-full text-[var(--text-secondary)] text-sm">
-                Select an inquiry to view details
+              <div className="flex items-center justify-center h-full text-[var(--text-secondary)] text-xs">
+                Select an inquiry from the queue to view details
               </div>
             )}
           </div>

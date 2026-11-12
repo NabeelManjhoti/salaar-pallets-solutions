@@ -1,86 +1,95 @@
 "use client"
 
 import Image from "next/image"
-import SectionWrapper from "@/components/section-wrapper"
 import Link from "next/link"
-import { ArrowRight, Droplets, Thermometer, Syringe, Infinity } from "lucide-react"
+import { ArrowRight, Check, Droplets, Thermometer, ShieldCheck, RefreshCw } from "lucide-react"
 
 const features = [
-  { icon: Droplets, text: "100% waterproof and moisture resistant" },
-  { icon: Thermometer, text: "Withstands extreme temperatures (-20°C to 60°C)" },
-  { icon: Syringe, text: "Hygienic — easy to clean, no bacterial growth" },
-  { icon: Infinity, text: "Long lifespan (5-10 years), 100% recyclable" },
+  { icon: Droplets, title: "100% Waterproof & Impermeable", text: "Zero moisture absorption. Impervious to acids, alkalis, oils, and chemical spills." },
+  { icon: Thermometer, title: "Sub-Zero to Extreme Heat", text: "Maintains structural stiffness from -20°C cold storage to +60°C transport conditions." },
+  { icon: ShieldCheck, title: "Sanitary Clean-Room Standard", text: "Non-porous, splinter-free surface designed for pressure steam washdowns and GMP compliance." },
+  { icon: RefreshCw, title: "Long Cycle Life & Recyclable", text: "High impact resistance with 5–8 year operational life, fully re-granulated at end of lifecycle." },
 ]
 
 const specs = [
-  { label: "Material", value: "HDPE / PP" },
-  { label: "Sizes", value: "Standard & custom sizes" },
-  { label: "Load Capacity", value: "500 — 1500 kg" },
-  { label: "Weight", value: "Lightweight — 10-25 kg" },
-  { label: "Applications", value: "Food, pharma, chemicals, cold storage" },
+  { label: "Polymer Grade", value: "Virgin / Recycled HDPE & PP Blend" },
+  { label: "Standard Footprint", value: "1200 × 1000 mm / 1200 × 800 mm" },
+  { label: "Dynamic Capacity", value: "1,200 – 1,500 kg" },
+  { label: "Static Load Rating", value: "4,500 kg" },
+  { label: "Deck Style", value: "Vented Mesh / Solid Smooth Surface" },
+  { label: "Entry Configuration", value: "4-Way Forklift Access" },
 ]
 
 export default function PlasticPalletsClient() {
   return (
     <>
-      <section className="bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/30 dark:to-forest-900/30 py-16 md:py-24">
+      <section className="bg-[var(--surface-alt)] border-b border-[var(--border)] py-12 md:py-16">
         <div className="container-custom">
           <div className="max-w-3xl">
-            <h1 className="font-display text-4xl md:text-5xl font-bold text-forest-600 dark:text-forest-300 mb-4">
-              New Plastic Pallets
+            <div className="font-mono text-xs uppercase tracking-wider text-wood-600 dark:text-wood-400 mb-2 font-semibold">
+              HDPE Polymer Systems
+            </div>
+            <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[var(--text)] mb-3">
+              Industrial Plastic Pallets
             </h1>
-            <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
-              Premium plastic pallets for industries that demand hygiene, consistency, and durability.
-              Ideal for food processing, pharmaceuticals, and clean-room environments.
+            <p className="text-base text-[var(--text-secondary)] leading-relaxed">
+              Durable, hygienic high-density polyethylene pallets engineered for food processing, pharmaceutical warehousing, cold storage, and chemical industries.
             </p>
           </div>
         </div>
       </section>
 
-      <SectionWrapper className="py-16 md:py-24">
+      <section className="py-16 md:py-20 border-b border-[var(--border)]">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="font-display text-2xl md:text-3xl font-bold text-forest-600 dark:text-forest-300 mb-6">
-                Why Choose Plastic Pallets?
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            <div className="lg:col-span-7">
+              <h2 className="text-2xl font-semibold tracking-tight text-[var(--text)] mb-6">
+                Engineered for Hygienic &amp; Sterile Handling
               </h2>
               <div className="space-y-4 mb-8">
                 {features.map((f) => (
-                  <div key={f.text} className="flex items-start gap-3">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-300">
-                      <f.icon size={18} />
+                  <div key={f.title} className="flex items-start gap-3.5 p-4 rounded-xl border border-[var(--border)] bg-[var(--surface-alt)]">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--bg)] text-[var(--text)]">
+                      <f.icon size={18} strokeWidth={1.75} />
                     </div>
-                    <p className="text-[var(--text-secondary)] py-1">{f.text}</p>
+                    <div>
+                      <div className="text-sm font-semibold text-[var(--text)] mb-0.5">{f.title}</div>
+                      <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">{f.text}</p>
+                    </div>
                   </div>
                 ))}
               </div>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 bg-forest-500 hover:bg-forest-600 text-white font-semibold px-6 py-3 rounded-xl transition-all"
+                className="inline-flex items-center gap-2 bg-wood-600 hover:bg-wood-500 text-white font-medium text-sm px-5 py-2.5 rounded-lg transition-colors"
               >
-                Get a Quote <ArrowRight size={18} />
+                Request Plastic Pallet Quote <ArrowRight size={16} />
               </Link>
             </div>
 
-            <div className="space-y-6">
-              <div className="rounded-2xl overflow-hidden border border-[var(--border)]">
+            <div className="lg:col-span-5 space-y-6">
+              <div className="rounded-xl overflow-hidden border border-[var(--border)] bg-[var(--surface-alt)] relative h-64">
                 <Image
                   src="/images/plastic-pallets.png"
-                  alt="Stack of plastic pallets"
-                  width={600}
-                  height={400}
-                  className="w-full h-64 object-cover"
+                  alt="Stack of industrial HDPE blue plastic pallets"
+                  fill
+                  className="object-contain p-4"
+                  sizes="(max-width: 768px) 100vw, 400px"
                 />
               </div>
-              <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg)] p-6">
-                <h3 className="font-display text-lg font-semibold text-forest-600 dark:text-forest-300 mb-4">
-                  Specifications
-                </h3>
-                <div className="space-y-3">
+
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--bg)] p-5">
+                <div className="flex items-center justify-between pb-3 mb-3 border-b border-[var(--border)]">
+                  <h3 className="text-sm font-semibold text-[var(--text)]">Standard Specifications</h3>
+                  <span className="font-mono text-[10px] text-wood-600 dark:text-wood-400 bg-wood-50 dark:bg-neutral-800 px-2 py-0.5 rounded border border-[var(--border)]">
+                    SPEC: SP-1210-PL
+                  </span>
+                </div>
+                <div className="space-y-2 text-xs">
                   {specs.map((s) => (
-                    <div key={s.label} className="flex justify-between items-center py-2 border-b border-[var(--border)] last:border-0">
-                      <span className="text-sm text-[var(--text-secondary)]">{s.label}</span>
-                      <span className="text-sm font-medium text-[var(--text)]">{s.value}</span>
+                    <div key={s.label} className="flex justify-between items-center py-1.5 border-b border-[var(--border)]/60 last:border-0">
+                      <span className="text-[var(--text-secondary)]">{s.label}</span>
+                      <span className="font-mono font-medium text-[var(--text)]">{s.value}</span>
                     </div>
                   ))}
                 </div>
@@ -88,36 +97,27 @@ export default function PlasticPalletsClient() {
             </div>
           </div>
         </div>
-      </SectionWrapper>
+      </section>
 
-      <SectionWrapper className="py-16 md:py-24 bg-[var(--surface-alt)]">
+      <section className="py-16 md:py-20 bg-[var(--surface-alt)]">
         <div className="container-custom">
-          <div className="rounded-2xl overflow-hidden border border-[var(--border)] mb-8">
-            <Image
-              src="/images/plastic-pallets-2.png"
-              alt="Modern warehouse with organized storage"
-              width={1200}
-              height={400}
-              className="w-full h-56 md:h-72 object-cover"
-            />
-          </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { title: "Food Grade", desc: "FDA-approved materials safe for direct food contact. Easy to sanitize." },
-              { title: "Pharma Ready", desc: "Smooth surfaces with no splinters — ideal for clean rooms and GMP facilities." },
-              { title: "Export Compatible", desc: "No ISPM 15 treatment needed. Ready for international shipping." },
+              { title: "Food & Pharma Compliant", desc: "Smooth non-porous resin prevents bacterial pooling and allows easy chemical or high-pressure washing." },
+              { title: "Exempt from ISPM-15", desc: "No phytosanitary fumigation or heat treatment required for export shipments to any worldwide port." },
+              { title: "Scrap Plastic Buyback", desc: "Broken plastic skids purchased by weight and recycled directly back into industrial resin feedstocks." },
             ].map((item) => (
-              <div key={item.title} className="p-6 rounded-2xl border border-[var(--border)] bg-[var(--bg)]">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-300 mb-3">
-                  <ArrowRight size={20} />
+              <div key={item.title} className="p-5 rounded-xl border border-[var(--border)] bg-[var(--bg)]">
+                <div className="flex items-center gap-2 mb-2">
+                  <Check size={16} className="text-wood-600 dark:text-wood-400" />
+                  <h3 className="text-base font-semibold text-[var(--text)]">{item.title}</h3>
                 </div>
-                <h3 className="font-display text-lg font-semibold text-forest-600 dark:text-forest-300 mb-2">{item.title}</h3>
-                <p className="text-sm text-[var(--text-secondary)]">{item.desc}</p>
+                <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
         </div>
-      </SectionWrapper>
+      </section>
     </>
   )
 }

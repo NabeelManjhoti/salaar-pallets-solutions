@@ -1,12 +1,10 @@
 "use client"
 
 const suggestions = [
-  "What products do you offer?",
-  "Do you buy old/damaged pallets?",
-  "Where are you located?",
-  "How do I get a quote?",
-  "What sizes do custom pallets come in?",
-  "Do you deliver outside Karachi?",
+  "Standard pallet dimensions & pricing",
+  "ISPM-15 export certification process",
+  "Selling surplus / scrap pallets",
+  "Karachi delivery & transport rates",
 ]
 
 interface SuggestedMessagesProps {
@@ -15,12 +13,12 @@ interface SuggestedMessagesProps {
 
 export default function SuggestedMessages({ onSelect }: SuggestedMessagesProps) {
   return (
-    <div className="flex flex-wrap gap-2 px-4 pb-3">
+    <div className="flex flex-wrap gap-1.5 px-4 pb-3">
       {suggestions.map((msg) => (
         <button
           key={msg}
           onClick={() => onSelect(msg)}
-          className="rounded-full border border-wood-300 dark:border-wood-600 px-3 py-1.5 text-xs text-wood-700 dark:text-wood-300 hover:bg-wood-100 dark:hover:bg-wood-800 transition-all"
+          className="rounded-md border border-[var(--border)] bg-[var(--surface-alt)] px-2.5 py-1 text-[11px] text-[var(--text-secondary)] hover:text-[var(--text)] hover:border-neutral-400 transition-colors text-left"
         >
           {msg}
         </button>

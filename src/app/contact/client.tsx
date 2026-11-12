@@ -8,11 +8,11 @@ import { Phone, Mail, MapPin, Clock, Send, Loader2 } from "lucide-react"
 const initialState: FormState = {}
 
 const fieldMeta: Record<string, { label: string; placeholder: string }> = {
-  name: { label: "Full Name *", placeholder: "Your name" },
-  email: { label: "Email Address *", placeholder: "your@email.com" },
-  phone: { label: "Phone Number *", placeholder: "03XX XXXXXXX" },
-  company: { label: "Company Name", placeholder: "Your company (optional)" },
-  message: { label: "Message *", placeholder: "Tell us about your requirements..." },
+  name: { label: "Full Name *", placeholder: "Your full name" },
+  email: { label: "Email Address *", placeholder: "corporate@company.com" },
+  phone: { label: "Phone / WhatsApp *", placeholder: "03XX XXXXXXX" },
+  company: { label: "Company / Factory Name", placeholder: "Enterprise name (optional)" },
+  message: { label: "Specifications / Order Requirements *", placeholder: "Specify pallet dimensions (e.g. 1200×1000mm), estimated quantity, load capacity, or scrap buyback volume..." },
 }
 
 export default function ContactClient() {
@@ -20,38 +20,40 @@ export default function ContactClient() {
 
   return (
     <>
-      <section className="bg-gradient-to-br from-wood-50 to-wood-100 dark:from-wood-900/30 dark:to-forest-900/30 py-16 md:py-24">
+      <section className="bg-[var(--surface-alt)] border-b border-[var(--border)] py-12 md:py-16">
         <div className="container-custom">
           <div className="max-w-3xl">
-            <h1 className="font-display text-4xl md:text-5xl font-bold text-wood-600 dark:text-wood-300 mb-4">
-              Contact Us
+            <div className="font-mono text-xs uppercase tracking-wider text-wood-600 dark:text-wood-400 mb-2 font-semibold">
+              Commercial Quotations &amp; Factory Visits
+            </div>
+            <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[var(--text)] mb-3">
+              Contact Factory Operations
             </h1>
-            <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
-              Ready to work with us? Give us a call, drop us a message, or fill out the form below.
-              We&apos;ll get back to you within 24 hours.
+            <p className="text-base text-[var(--text-secondary)] leading-relaxed">
+              Reach our Baldia Town manufacturing desk for immediate freight rates, technical timber specifications, or scheduling scrap pallet warehouse clearing.
             </p>
           </div>
         </div>
       </section>
 
-      <section className="py-16 md:py-24">
+      <section className="py-16 md:py-20">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div>
-              <h2 className="font-display text-2xl font-bold text-wood-600 dark:text-wood-300 mb-6">
-                Send Us a Message
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            <div className="lg:col-span-7">
+              <h2 className="text-xl sm:text-2xl font-semibold tracking-tight text-[var(--text)] mb-6">
+                Submit Order or Buyback Request
               </h2>
 
               {state.success ? (
-                <div className="p-6 rounded-2xl bg-forest-50 dark:bg-forest-900/20 border border-forest-200 dark:border-forest-800">
-                  <p className="text-forest-700 dark:text-forest-300 font-medium">{state.message}</p>
+                <div className="p-5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400">
+                  <p className="font-medium text-sm">{state.message}</p>
                 </div>
               ) : (
-                <form action={formAction} className="space-y-5">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <form action={formAction} className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {["name", "email"].map((field) => (
                       <div key={field}>
-                        <label htmlFor={field} className="block text-sm font-medium text-[var(--text)] mb-1.5">
+                        <label htmlFor={field} className="block text-xs font-medium text-[var(--text)] mb-1">
                           {fieldMeta[field].label}
                         </label>
                         <input
@@ -59,7 +61,7 @@ export default function ContactClient() {
                           name={field}
                           type={field === "email" ? "email" : "text"}
                           required
-                          className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-wood-400 dark:focus:ring-forest-500 transition-all"
+                          className="w-full px-3.5 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--bg)] text-xs sm:text-sm text-[var(--text)] placeholder:text-[var(--text-secondary)] outline-none focus:border-neutral-400 transition-colors"
                           placeholder={fieldMeta[field].placeholder}
                         />
                         {state.errors?.[field] && (
@@ -69,10 +71,10 @@ export default function ContactClient() {
                     ))}
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {["phone", "company"].map((field) => (
                       <div key={field}>
-                        <label htmlFor={field} className="block text-sm font-medium text-[var(--text)] mb-1.5">
+                        <label htmlFor={field} className="block text-xs font-medium text-[var(--text)] mb-1">
                           {fieldMeta[field].label}
                         </label>
                         <input
@@ -80,7 +82,7 @@ export default function ContactClient() {
                           name={field}
                           type={field === "phone" ? "tel" : "text"}
                           required={field === "phone"}
-                          className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-wood-400 dark:focus:ring-forest-500 transition-all"
+                          className="w-full px-3.5 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--bg)] text-xs sm:text-sm text-[var(--text)] placeholder:text-[var(--text-secondary)] outline-none focus:border-neutral-400 transition-colors"
                           placeholder={fieldMeta[field].placeholder}
                         />
                         {state.errors?.[field] && (
@@ -91,35 +93,35 @@ export default function ContactClient() {
                   </div>
 
                   <div>
-                    <label htmlFor="serviceInterest" className="block text-sm font-medium text-[var(--text)] mb-1.5">
-                      I&apos;m Interested In
+                    <label htmlFor="serviceInterest" className="block text-xs font-medium text-[var(--text)] mb-1">
+                      Primary Service Requirement
                     </label>
                     <select
                       id="serviceInterest"
                       name="serviceInterest"
-                      className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-wood-400 dark:focus:ring-forest-500 transition-all"
+                      className="w-full px-3.5 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--bg)] text-xs sm:text-sm text-[var(--text)] outline-none focus:border-neutral-400 transition-colors"
                     >
-                      <option value="">Select a service</option>
-                      <option value="wooden-pallets">New Wooden Pallets</option>
-                      <option value="plastic-pallets">New Plastic Pallets</option>
-                      <option value="custom-pallets">Custom Pallets</option>
-                      <option value="pallet-repair">Pallet Repair Service</option>
-                      <option value="sell-pallets">Sell Old/Damaged Pallets</option>
-                      <option value="other">Other</option>
+                      <option value="">Select requirement category</option>
+                      <option value="wooden-pallets">New Wooden Pallets (1200×1000 or Euro)</option>
+                      <option value="plastic-pallets">HDPE Plastic Skids &amp; Pallets</option>
+                      <option value="custom-pallets">Custom Sizing / CAD Fabrication</option>
+                      <option value="pallet-repair">On-Site Pallet Repair Service</option>
+                      <option value="sell-pallets">Sell Surplus / Damaged Pallets</option>
+                      <option value="other">General Freight Consultation</option>
                     </select>
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-[var(--text)] mb-1.5">
-                      Message *
+                    <label htmlFor="message" className="block text-xs font-medium text-[var(--text)] mb-1">
+                      {fieldMeta.message.label}
                     </label>
                     <textarea
                       id="message"
                       name="message"
                       required
-                      rows={5}
-                      className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-wood-400 dark:focus:ring-forest-500 transition-all resize-none"
-                      placeholder="Tell us about your requirements..."
+                      rows={4}
+                      className="w-full px-3.5 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--bg)] text-xs sm:text-sm text-[var(--text)] placeholder:text-[var(--text-secondary)] outline-none focus:border-neutral-400 transition-colors resize-none"
+                      placeholder={fieldMeta.message.placeholder}
                     />
                     {state.errors?.message && (
                       <p className="text-red-500 text-xs mt-1">{state.errors.message[0]}</p>
@@ -127,55 +129,55 @@ export default function ContactClient() {
                   </div>
 
                   {state.message && !state.success && (
-                    <p className="text-red-500 text-sm">{state.message}</p>
+                    <p className="text-red-500 text-xs">{state.message}</p>
                   )}
 
                   <button
                     type="submit"
                     disabled={pending}
-                    className="inline-flex items-center gap-2 bg-wood-600 hover:bg-wood-700 disabled:opacity-60 text-white font-semibold px-6 py-3 rounded-xl transition-all"
+                    className="inline-flex items-center gap-2 bg-wood-600 hover:bg-wood-500 disabled:opacity-50 text-white font-medium text-sm px-5 py-2.5 rounded-lg transition-colors"
                   >
                     {pending ? (
-                      <><Loader2 size={18} className="animate-spin" /> Sending...</>
+                      <><Loader2 size={15} className="animate-spin" /> Submitting Inquiry...</>
                     ) : (
-                      <><Send size={18} /> Send Message</>
+                      <><Send size={15} /> Submit Quotation Request</>
                     )}
                   </button>
                 </form>
               )}
             </div>
 
-            <div>
-              <h2 className="font-display text-2xl font-bold text-wood-600 dark:text-wood-300 mb-6">
-                Contact Information
+            <div className="lg:col-span-5 space-y-6">
+              <h2 className="text-xl sm:text-2xl font-semibold tracking-tight text-[var(--text)] mb-6">
+                Factory &amp; Yard Details
               </h2>
 
-              <div className="space-y-5 mb-8">
+              <div className="space-y-4">
                 {[
-                  { icon: Phone, label: "Phone", value: "0333 8538388", href: "tel:+923338538388" },
-                  { icon: Mail, label: "Email", value: "nabeelalimanjhoti@gmail.com", href: "mailto:nabeelalimanjhoti@gmail.com" },
-                  { icon: MapPin, label: "Location", value: "Baldia Town 4/5, Timber Market, Karachi" },
-                  { icon: Clock, label: "Hours", value: "Mon — Sun: 10:00 AM — 10:00 PM" },
+                  { icon: Phone, label: "Direct Phone / WhatsApp", value: "0333 8538388", href: "tel:+923338538388" },
+                  { icon: Mail, label: "Official Email", value: "nabeelalimanjhoti@gmail.com", href: "mailto:nabeelalimanjhoti@gmail.com" },
+                  { icon: MapPin, label: "Yard Location", value: "Baldia Town 4/5, Timber Market, Karachi, Pakistan" },
+                  { icon: Clock, label: "Factory Dispatch Hours", value: "Mon — Sun: 10:00 AM — 10:00 PM (PKT)" },
                 ].map((item) => (
-                  <div key={item.label} className="flex gap-4">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-wood-100 text-wood-600 dark:bg-forest-900 dark:text-forest-300">
-                      <item.icon size={20} />
+                  <div key={item.label} className="flex gap-3.5 p-4 rounded-xl border border-[var(--border)] bg-[var(--surface-alt)]">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--bg)] text-[var(--text)]">
+                      <item.icon size={17} strokeWidth={1.75} />
                     </div>
                     <div>
-                      <div className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">{item.label}</div>
+                      <div className="text-[11px] font-mono text-[var(--text-secondary)] uppercase">{item.label}</div>
                       {item.href ? (
-                        <a href={item.href} className="font-medium text-[var(--text)] hover:text-wood-600 dark:hover:text-forest-300 transition-colors">
+                        <a href={item.href} className="text-xs sm:text-sm font-semibold text-[var(--text)] hover:text-wood-600 transition-colors">
                           {item.value}
                         </a>
                       ) : (
-                        <div className="font-medium text-[var(--text)]">{item.value}</div>
+                        <div className="text-xs sm:text-sm font-semibold text-[var(--text)]">{item.value}</div>
                       )}
                     </div>
                   </div>
                 ))}
               </div>
 
-              <div className="rounded-2xl overflow-hidden border border-[var(--border)] h-[300px]">
+              <div className="rounded-xl overflow-hidden border border-[var(--border)] h-[240px]">
                 <iframe
                   src="https://maps.google.com/maps?q=24.9080086,66.9642382&z=17&output=embed"
                   width="100%"
@@ -184,7 +186,7 @@ export default function ContactClient() {
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="Salaar Pallet Solutions Location"
+                  title="Salaar Pallet Solutions Baldia Town Yard"
                 />
               </div>
             </div>

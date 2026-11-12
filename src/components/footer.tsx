@@ -4,25 +4,24 @@ import { Phone, Mail, MapPin } from "lucide-react"
 
 export default function Footer() {
   return (
-    <footer className="border-t bg-wood-900 text-wood-200">
+    <footer className="border-t border-neutral-800 bg-[#101114] text-neutral-300">
       <div className="container-custom py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <Image src="/images/logo.png" alt="Salaar Pallet Solutions" width={36} height={36} className="rounded-lg" />
-              <span className="font-display text-lg font-bold text-wood-100">
+              <Image src="/images/logo.png" alt="Salaar Pallet Solutions" width={32} height={32} className="rounded-md" />
+              <span className="text-base font-semibold text-neutral-100 tracking-tight">
                 Salaar Pallet Solutions
               </span>
             </div>
-            <p className="text-wood-300 text-sm leading-relaxed">
-              Karachi-based supplier of premium wooden and plastic pallets.
-              We also provide pallet repair services and purchase used/damaged
-              pallets across Pakistan.
+            <p className="text-neutral-400 text-sm leading-relaxed max-w-sm">
+              Karachi-based manufacturer and supplier of heavy-duty wooden and HDPE plastic pallets.
+              Providing repair services, custom dimensions, and scrap buyback across Pakistan.
             </p>
           </div>
 
           <div>
-            <h3 className="font-display text-wood-100 font-semibold mb-4">Quick Links</h3>
+            <h3 className="text-xs font-semibold text-neutral-200 uppercase tracking-wider mb-4">Quick Links</h3>
             <div className="flex flex-col gap-2 text-sm">
               {[
                 { href: "/", label: "Home" },
@@ -36,7 +35,7 @@ export default function Footer() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="hover:text-wood-100 transition-colors"
+                  className="text-neutral-400 hover:text-neutral-100 transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -45,23 +44,23 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-display text-wood-100 font-semibold mb-4">Contact Info</h3>
-            <div className="flex flex-col gap-3 text-sm">
-              <a href="tel:+923338538388" className="flex items-center gap-2 hover:text-wood-100 transition-colors">
-                <Phone size={16} /> 0333 8538388
+            <h3 className="text-xs font-semibold text-neutral-200 uppercase tracking-wider mb-4">Contact Info</h3>
+            <div className="flex flex-col gap-3 text-sm text-neutral-300">
+              <a href="tel:+923338538388" className="flex items-center gap-2 text-neutral-400 hover:text-neutral-100 transition-colors">
+                <Phone size={15} /> 0333 8538388
               </a>
-              <a href="mailto:nabeelalimanjhoti@gmail.com" className="flex items-center gap-2 hover:text-wood-100 transition-colors">
-                <Mail size={16} /> nabeelalimanjhoti@gmail.com
+              <a href="mailto:nabeelalimanjhoti@gmail.com" className="flex items-center gap-2 text-neutral-400 hover:text-neutral-100 transition-colors">
+                <Mail size={15} /> nabeelalimanjhoti@gmail.com
               </a>
-              <div className="flex items-start gap-2">
-                <MapPin size={16} className="mt-0.5 shrink-0" />
+              <div className="flex items-start gap-2 text-neutral-400">
+                <MapPin size={15} className="mt-0.5 shrink-0" />
                 <span>Baldia Town 4/5, Timber Market, Karachi</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-wood-700 text-center text-sm text-wood-400">
+        <div className="mt-8 pt-8 border-t border-neutral-800 text-center text-xs text-neutral-500">
           <p>&copy; {new Date().getFullYear()} Salaar Pallet Solutions. All rights reserved.</p>
         </div>
       </div>

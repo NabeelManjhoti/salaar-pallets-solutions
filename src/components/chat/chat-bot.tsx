@@ -3,19 +3,16 @@
 import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
 import { useEffect, useRef, useState, useCallback, type FormEvent } from "react"
-import { X, BotMessageSquare, Loader2, Send } from "lucide-react"
+import { X, MessageSquare, Loader2, Send } from "lucide-react"
 import Image from "next/image"
 import ChatMessage from "./chat-message"
 import SuggestedMessages from "./suggested-messages"
-
-const DISMISSED_KEY = "chatbot.dismissed"
 
 export default function ChatBot() {
   const [open, setOpen] = useState(false)
   const [localInput, setLocalInput] = useState("")
   const [showSuggestions, setShowSuggestions] = useState(true)
   const messagesEndRef = useRef<HTMLDivElement>(null)
-  const didAutoOpen = useRef(false)
 
   const { messages, sendMessage, status, error } = useChat({
     transport: new DefaultChatTransport({ api: "/api/chat" }),
@@ -25,28 +22,11 @@ export default function ChatBot() {
   const isLoading = status === "submitted" || status === "streaming"
 
   useEffect(() => {
-    if (typeof window === "undefined") return
-    if (didAutoOpen.current) return
-    const dismissed = sessionStorage.getItem(DISMISSED_KEY)
-    if (dismissed) return
-
-    const timer = setTimeout(() => {
-      didAutoOpen.current = true
-      setOpen(true)
-    }, 3000)
-
-    return () => clearTimeout(timer)
-  }, [])
-
-  useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
 
   const handleClose = useCallback(() => {
     setOpen(false)
-    try {
-      sessionStorage.setItem(DISMISSED_KEY, "true")
-    } catch {}
   }, [])
 
   const handleSuggestion = useCallback(
@@ -75,43 +55,44 @@ export default function ChatBot() {
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="fixed bottom-6 right-6 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-wood-600 text-white shadow-lg hover:bg-wood-700 hover:scale-110 hover:shadow-xl hover:shadow-wood-600/25 transition-all duration-300 animate-[shake_0.6s_ease-in-out_3s_infinite]"
-          aria-label="Open chat"
+          className="fixed bottom-5 right-5 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-[#18191d] hover:bg-neutral-800 text-neutral-100 border border-neutral-700/80 shadow-lg transition-colors"
+          aria-label="Open support chat"
         >
-          <BotMessageSquare size={34} />
+          <MessageSquare size={19} />
         </button>
       )}
 
       {open && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={handleClose} />
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:justify-end sm:p-6">
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-xs sm:bg-transparent" onClick={handleClose} />
 
           <div
             role="dialog"
             aria-modal="true"
-            aria-label="Chat with Salaar Assistant"
-            className="relative z-10 w-full sm:max-w-md mx-0 sm:mx-4 h-[90vh] sm:h-[600px] bg-[var(--bg)] border border-[var(--border)] shadow-2xl flex flex-col rounded-none sm:rounded-2xl overflow-hidden animate-in slide-in-from-bottom-4 fade-in duration-200"
+            aria-label="Chat with Salaar Technical Assistant"
+            className="relative z-10 w-full sm:w-[400px] h-[85vh] sm:h-[560px] bg-[var(--bg)] border border-[var(--border)] shadow-2xl flex flex-col rounded-t-xl sm:rounded-xl overflow-hidden"
           >
-            <div className="bg-gradient-to-r from-wood-600 to-forest-600 p-4 flex items-center gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20">
+            {/* Quiet Industrial Header */}
+            <div className="bg-[#141518] text-neutral-100 p-3.5 flex items-center justify-between border-b border-neutral-800">
+              <div className="flex items-center gap-2.5">
                 <Image
                   src="/images/logo.png"
                   alt="Salaar Pallet Solutions"
-                  width={28}
-                  height={28}
-                  className="rounded-full"
+                  width={24}
+                  height={24}
+                  className="rounded-xs"
                 />
-              </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-display text-white font-semibold text-sm">Salaar Assistant</h3>
-                <p className="text-white/70 text-xs">AI Assistant</p>
+                <div>
+                  <div className="text-xs font-semibold text-neutral-100 tracking-tight">Salaar Technical Desk</div>
+                  <div className="text-[10px] text-neutral-400 font-mono">SPEC &amp; LOGISTICS ASSISTANT</div>
+                </div>
               </div>
               <button
                 onClick={handleClose}
                 aria-label="Close chat"
-                className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-white/20 transition"
+                className="flex h-7 w-7 items-center justify-center rounded text-neutral-400 hover:text-white hover:bg-neutral-800 transition-colors"
               >
-                <X size={18} className="text-white" />
+                <X size={16} />
               </button>
             </div>
 
@@ -119,7 +100,7 @@ export default function ChatBot() {
               {isEmpty && (
                 <ChatMessage
                   role="assistant"
-                  content="Hi there! Welcome to **Salaar Pallet Solutions**. I'm your virtual assistant. How can I help you today? 😊"
+                  content="Welcome to Salaar Pallet Solutions. Ask about standard 1200×1000mm specs, ISPM-15 export certification, load ratings, or scrap pallet buyback in Karachi."
                 />
               )}
 
@@ -135,15 +116,15 @@ export default function ChatBot() {
               })}
 
               {isLoading && (
-                <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)] pl-2">
-                  <Loader2 size={14} className="animate-spin" />
-                  <span>Typing...</span>
+                <div className="flex items-center gap-2 text-xs text-[var(--text-secondary)] pl-2 py-1">
+                  <Loader2 size={13} className="animate-spin" />
+                  <span>Checking specifications...</span>
                 </div>
               )}
 
               {error && (
-                <div className="text-red-500 text-sm text-center p-2">
-                  Something went wrong. Please try again.
+                <div className="text-red-500 text-xs text-center p-2">
+                  Unable to connect. Please message us directly via WhatsApp.
                 </div>
               )}
 
@@ -157,16 +138,17 @@ export default function ChatBot() {
                 type="text"
                 value={localInput}
                 onChange={(e) => setLocalInput(e.target.value)}
-                placeholder="Type your message..."
+                placeholder="Ask about specs, quotes, delivery..."
                 disabled={isLoading}
-                className="flex-1 rounded-xl border border-[var(--border)] bg-[var(--surface-alt)] px-4 py-2.5 text-sm text-[var(--text)] placeholder:text-[var(--text-secondary)] outline-none focus:ring-2 focus:ring-wood-400 dark:focus:ring-forest-500 transition-all disabled:opacity-50"
+                className="flex-1 rounded-lg border border-[var(--border)] bg-[var(--surface-alt)] px-3 py-2 text-xs text-[var(--text)] placeholder:text-[var(--text-secondary)] outline-none focus:border-neutral-400 transition-colors disabled:opacity-50"
               />
               <button
                 type="submit"
                 disabled={isLoading || !localInput.trim()}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-wood-600 text-white hover:bg-wood-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-wood-600 text-white hover:bg-wood-500 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                aria-label="Send inquiry"
               >
-                {isLoading ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
+                {isLoading ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />}
               </button>
             </form>
           </div>

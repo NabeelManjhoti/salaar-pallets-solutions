@@ -1,87 +1,78 @@
-"use client"
-
-import { motion } from "framer-motion"
 import Link from "next/link"
 import { TreePine, Container, Ruler, Wrench, ArrowRight } from "lucide-react"
 
 const services = [
   {
     title: "New Wooden Pallets",
-    description: "High-quality wooden pallets in standard and custom sizes. ISPM 15 certified, heat-treated, and built to last.",
+    description: "Hardwood and softwood platforms in standard 1200×1000mm and 1200×800mm Euro specs. ISPM-15 certified heat-treatment for international export.",
     icon: TreePine,
     href: "/wooden-pallets",
-    color: "bg-amber-50 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400",
+    tag: "Standard & Export Specs",
   },
   {
-    title: "New Plastic Pallets",
-    description: "Durable, hygienic plastic pallets ideal for food, pharmaceutical, and clean-room environments.",
+    title: "HDPE Plastic Pallets",
+    description: "Hygienic, washable high-density polyethylene pallets for food processing, pharmaceutical warehouses, and cold storage applications.",
     icon: Container,
     href: "/plastic-pallets",
-    color: "bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400",
+    tag: "Hygienic & Washable",
   },
   {
-    title: "Custom Sizes",
-    description: "Any size, any specification. We manufacture pallets tailored to your exact product and storage requirements.",
+    title: "Custom Manufacturing",
+    description: "Custom length stringers, 2-way and 4-way notch cuts, and reinforced double-wing decks built to exact load engineering requirements.",
     icon: Ruler,
     href: "/customized-pallets",
-    color: "bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400",
+    tag: "Engineered Dimensions",
   },
   {
-    title: "Pallet Repair Service",
-    description: "Professional repair services to extend pallet life. Quick turnaround, competitive rates in Karachi.",
+    title: "Pallet Repair & Reconditioning",
+    description: "On-demand board replacement, runner re-securing, and structural certification to extend pallet cycle life at minimal cost.",
     icon: Wrench,
     href: "/contact",
-    color: "bg-orange-50 text-orange-600 dark:bg-orange-900/20 dark:text-orange-400",
+    tag: "Lifecycle Maintenance",
   },
 ]
 
 export default function ServicesSection() {
   return (
-    <section className="py-16 md:py-24">
+    <section className="py-16 md:py-20">
       <div className="container-custom">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-wood-600 dark:text-wood-300 mb-4">
-            Our Products &amp; Services
+        <div className="max-w-2xl mb-12">
+          <div className="font-mono text-xs uppercase tracking-wider text-wood-600 dark:text-wood-400 mb-2 font-semibold">
+            Product &amp; Supply Scope
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-[var(--text)] mb-3">
+            Manufactured for Heavy Industrial Freight
           </h2>
-          <p className="text-[var(--text-secondary)] max-w-2xl mx-auto">
-            Comprehensive pallet solutions for businesses of all sizes. From standard supply to custom manufacturing and repair.
+          <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed">
+            Full-lifecycle pallet solutions for Pakistani manufacturers, exporters, and logistics fleets. Standard supply, custom builds, and ongoing maintenance.
           </p>
-        </motion.div>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {services.map((service, i) => (
-            <motion.div
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {services.map((service) => (
+            <Link
               key={service.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
+              href={service.href}
+              className="group flex flex-col sm:flex-row gap-4 p-5 rounded-xl border border-[var(--border)] bg-[var(--bg)] hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors"
             >
-              <Link
-                href={service.href}
-                className="group flex gap-5 p-6 rounded-2xl border border-[var(--border)] bg-[var(--bg)] hover:border-wood-300 dark:hover:border-forest-600 hover:shadow-lg transition-all duration-300"
-              >
-                <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${service.color}`}>
-                  <service.icon size={24} />
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface-alt)] text-[var(--text)]">
+                <service.icon size={20} strokeWidth={1.5} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-2 mb-1">
+                  <h3 className="text-base font-semibold text-[var(--text)] group-hover:text-wood-600 dark:group-hover:text-wood-400 transition-colors">
+                    {service.title}
+                  </h3>
+                  <ArrowRight size={15} className="shrink-0 text-[var(--text-secondary)] group-hover:text-[var(--text)] transition-colors" />
                 </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between gap-2">
-                    <h3 className="font-display text-lg font-semibold text-wood-600 dark:text-wood-300">
-                      {service.title}
-                    </h3>
-                    <ArrowRight size={18} className="shrink-0 text-[var(--text-secondary)] group-hover:text-wood-500 group-hover:translate-x-1 transition-all" />
-                  </div>
-                  <p className="text-sm text-[var(--text-secondary)] mt-1 leading-relaxed">
-                    {service.description}
-                  </p>
+                <div className="font-mono text-[11px] text-wood-600 dark:text-wood-400 mb-2">
+                  {service.tag}
                 </div>
-              </Link>
-            </motion.div>
+                <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
+                  {service.description}
+                </p>
+              </div>
+            </Link>
           ))}
         </div>
       </div>

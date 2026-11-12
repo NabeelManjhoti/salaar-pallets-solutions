@@ -1,70 +1,83 @@
-"use client"
+import { BadgeCheck, Truck, Recycle, MapPin } from "lucide-react"
 
-import { motion } from "framer-motion"
-import { Shield, Truck, BadgeCheck, Headphones } from "lucide-react"
-
-const reasons = [
+const capabilities = [
   {
+    num: "01",
     icon: BadgeCheck,
-    title: "Premium Quality",
-    description: "All pallets meet industry standards. ISPM 15 certified wood and food-grade plastic options available.",
+    title: "ISPM-15 Certified Heat Treatment",
+    desc: "Every export pallet is heated to 56°C core temperature for 30 minutes in certified chambers and stamped with the official IPPC logo for seamless customs clearance.",
   },
   {
+    num: "02",
     icon: Truck,
-    title: "All-Pakistan Delivery",
-    description: "Based in Karachi, delivering to businesses across Pakistan. Fast, reliable logistics network.",
+    title: "All-Pakistan Fleet Freight Network",
+    desc: "Factory-direct loading from Baldia Town, Karachi with daily container-load dispatches to industrial zones in Lahore, Faisalabad, Multan, Hub, and Port Qasim.",
   },
   {
-    icon: Shield,
-    title: "Custom Manufacturing",
-    description: "Any size, any specification. We build pallets to match your exact requirements.",
-  },
-  {
-    icon: Headphones,
-    title: "24/7 Support",
-    description: "Dedicated customer support. WhatsApp, phone, and email — we're always here to help.",
+    num: "03",
+    icon: Recycle,
+    title: "Scrap Pallet Buyback & Reconditioning",
+    desc: "Complete warehouse clearing services. We buy damaged wooden and plastic pallets at fair industrial rates or trade them for newly certified units.",
   },
 ]
 
 export default function WhyUsSection() {
   return (
-    <section className="py-16 md:py-24">
+    <section className="py-16 md:py-20 bg-[var(--surface-alt)] border-y border-[var(--border)]">
       <div className="container-custom">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-wood-600 dark:text-wood-300 mb-4">
-            Why Choose Salaar Pallet Solutions?
-          </h2>
-          <p className="text-[var(--text-secondary)] max-w-2xl mx-auto">
-            We combine local manufacturing expertise with global quality standards to serve businesses across Pakistan.
-          </p>
-        </motion.div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          {/* Left Column: Direct Yard Advantage Statement */}
+          <div className="lg:col-span-5 bg-[var(--bg)] p-6 sm:p-8 rounded-xl border border-[var(--border)]">
+            <div className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-wood-600 dark:text-wood-400 mb-3 font-semibold">
+              <MapPin size={14} /> Baldia Town, Karachi Facility
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-[var(--text)] mb-4 leading-tight">
+              Direct Mill Sourcing. Zero Middlemen.
+            </h2>
+            <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-6">
+              Unlike commercial traders who resell broker inventory, Salaar operates direct woodworking, pneumatic nail-clinching, and lumber sizing yards in Karachi&apos;s primary industrial timber hub.
+            </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {reasons.map((reason, i) => (
-            <motion.div
-              key={reason.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="text-center p-6 rounded-2xl border border-[var(--border)] bg-[var(--bg)] hover:border-wood-300 dark:hover:border-forest-600 transition-all duration-300"
-            >
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-xl bg-wood-100 text-wood-600 dark:bg-forest-900 dark:text-forest-300 mb-4">
-                <reason.icon size={28} />
+            <div className="space-y-3 pt-4 border-t border-[var(--border)] font-mono text-xs">
+              <div className="flex justify-between py-1 border-b border-[var(--border)]/60">
+                <span className="text-[var(--text-secondary)]">Location</span>
+                <span className="text-[var(--text)] font-medium">Timber Market, Karachi</span>
               </div>
-              <h3 className="font-display text-lg font-semibold text-wood-600 dark:text-wood-300 mb-2">
-                {reason.title}
-              </h3>
-              <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-                {reason.description}
-              </p>
-            </motion.div>
-          ))}
+              <div className="flex justify-between py-1 border-b border-[var(--border)]/60">
+                <span className="text-[var(--text-secondary)]">Lumber Species</span>
+                <span className="text-[var(--text)] font-medium">Pakistani Pine, Hardwood, Fir</span>
+              </div>
+              <div className="flex justify-between py-1">
+                <span className="text-[var(--text-secondary)]">Fastening Spec</span>
+                <span className="text-[var(--text)] font-medium">Screw-Shank Annular Ring Nails</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: 3 High-Signal Capability Rows */}
+          <div className="lg:col-span-7 space-y-4">
+            {capabilities.map((cap) => (
+              <div
+                key={cap.num}
+                className="flex items-start gap-4 p-5 rounded-xl border border-[var(--border)] bg-[var(--bg)]"
+              >
+                <div className="font-mono text-xs font-semibold text-neutral-400 mt-1">
+                  {cap.num}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <cap.icon size={16} className="text-wood-600 dark:text-wood-400 shrink-0" strokeWidth={1.75} />
+                    <h3 className="text-base font-semibold text-[var(--text)]">
+                      {cap.title}
+                    </h3>
+                  </div>
+                  <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
+                    {cap.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

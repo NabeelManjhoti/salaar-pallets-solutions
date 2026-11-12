@@ -30,9 +30,9 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b bg-[var(--bg)]/80 backdrop-blur-lg">
       <div className="container-custom flex h-16 items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          <Image src="/images/logo.png" alt="Salaar Pallet Solutions" width={36} height={36} className="rounded-lg" />
-          <span className="font-display text-lg font-bold text-wood-600 hidden sm:block">
+        <Link href="/" className="flex items-center gap-2.5">
+          <Image src="/images/logo.png" alt="Salaar Pallet Solutions" width={32} height={32} className="rounded-md" />
+          <span className="text-base font-semibold tracking-tight text-[var(--text)] hidden sm:block">
             Salaar Pallet Solutions
           </span>
         </Link>
@@ -42,10 +42,10 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+              className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
                 isActive(link.href)
-                  ? "bg-wood-100 text-wood-700 dark:bg-forest-900 dark:text-forest-200"
-                  : "text-[var(--text)] hover:text-wood-600 dark:hover:text-forest-300"
+                  ? "bg-[var(--surface-alt)] text-[var(--text)]"
+                  : "text-[var(--text-secondary)] hover:text-[var(--text)] hover:bg-[var(--surface-alt)]/50"
               }`}
             >
               {link.label}
@@ -54,20 +54,27 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <Link
+            href="/contact"
+            className="hidden sm:inline-flex items-center text-xs font-semibold px-3.5 py-1.5 rounded-md bg-wood-600 hover:bg-wood-700 text-white transition-colors"
+          >
+            Get a Quote
+          </Link>
+
           <button
             onClick={toggleTheme}
-            className="flex h-9 w-9 items-center justify-center rounded-lg text-[var(--text-secondary)] hover:bg-[var(--surface-alt)] transition-colors"
+            className="flex h-8 w-8 items-center justify-center rounded-md text-[var(--text-secondary)] hover:text-[var(--text)] hover:bg-[var(--surface-alt)] transition-colors"
             aria-label="Toggle theme"
           >
-            {theme === "light" ? <Sun size={18} /> : <Moon size={18} />}
+            {theme === "light" ? <Sun size={16} /> : <Moon size={16} />}
           </button>
 
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="flex lg:hidden h-9 w-9 items-center justify-center rounded-lg text-[var(--text-secondary)] hover:bg-[var(--surface-alt)] transition-colors"
+            className="flex lg:hidden h-8 w-8 items-center justify-center rounded-md text-[var(--text-secondary)] hover:text-[var(--text)] hover:bg-[var(--surface-alt)] transition-colors"
             aria-label="Toggle menu"
           >
-            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+            {mobileOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </div>
@@ -80,10 +87,10 @@ export default function Header() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className={`px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
+                className={`px-3.5 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                   isActive(link.href)
-                    ? "bg-wood-100 text-wood-700 dark:bg-forest-900 dark:text-forest-200"
-                    : "text-[var(--text)] hover:bg-[var(--surface-alt)]"
+                    ? "bg-[var(--surface-alt)] text-[var(--text)] font-semibold"
+                    : "text-[var(--text-secondary)] hover:bg-[var(--surface-alt)]/60 hover:text-[var(--text)]"
                 }`}
               >
                 {link.label}

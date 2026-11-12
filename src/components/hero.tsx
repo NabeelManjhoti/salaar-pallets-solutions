@@ -1,81 +1,163 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowRight, ShieldCheck } from "lucide-react"
+import { ArrowRight, Check, Layers } from "lucide-react"
 
 export default function Hero() {
+  const [activeTab, setActiveTab] = useState<"wood" | "plastic">("wood")
+
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-wood-900 via-wood-800 to-forest-900">
+    <section className="relative overflow-hidden bg-[#121316] text-neutral-100 border-b border-neutral-800">
+      {/* Background authentic warehouse photography with controlled dark scrim */}
       <Image
         src="/images/hero-bg.jpg"
-        alt="Warehouse with pallet storage"
+        alt="Industrial pallet warehouse and logistics facility"
         fill
-        className="absolute inset-0 object-cover opacity-20 mix-blend-overlay"
+        className="absolute inset-0 object-cover opacity-15"
         priority
       />
 
-      <div className="container-custom relative py-20 md:py-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-          >
-            <div className="inline-flex items-center gap-2 bg-wood-500/20 text-wood-200 text-sm font-medium px-4 py-1.5 rounded-full mb-6">
-              <ShieldCheck size={16} />
-              Karachi-Based | Serving All Pakistan
+      <div className="container-custom relative py-16 lg:py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* Left Column: Quiet, Authoritative Commercial Statement */}
+          <div className="lg:col-span-7">
+            {/* Industrial Stencil Signature Detail */}
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md border border-neutral-700/80 bg-neutral-900/80 font-mono text-xs text-neutral-300 mb-6 tracking-wide">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              <span>PK-104 · ISPM-15 COMPLIANT · KARACHI FACTORY</span>
             </div>
 
-            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight mb-6">
-              Your Trusted Partner for{" "}
-              <span className="text-wood-300">Wooden &amp; Plastic Pallets</span>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-white leading-[1.15] mb-5">
+              Industrial Pallets Engineered for Heavy Freight &amp; Logistics
             </h1>
 
-            <p className="text-lg text-wood-200/80 leading-relaxed mb-8 max-w-xl">
-              Premium quality pallets supply, custom manufacturing, repair services,
-              and pallet purchasing across Pakistan. Quality you can rely on.
+            <p className="text-base sm:text-lg text-neutral-400 leading-relaxed mb-8 max-w-xl">
+              Karachi-based manufacturer of kiln-dried wooden pallets, ISPM-15 certified export platforms, and hygienic HDPE plastic pallets. Daily supply, custom builds, and scrap pallet buyback.
             </p>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap items-center gap-3">
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 bg-wood-500 hover:bg-wood-400 text-wood-900 font-semibold px-6 py-3 rounded-xl transition-all hover:shadow-lg hover:shadow-wood-500/25"
+                className="inline-flex items-center gap-2 bg-wood-600 hover:bg-wood-500 text-white font-medium text-sm px-5 py-2.5 rounded-lg transition-colors shadow-sm"
               >
-                Get a Quote <ArrowRight size={18} />
+                Request Quotation <ArrowRight size={16} />
               </Link>
               <Link
                 href="/wooden-pallets"
-                className="inline-flex items-center gap-2 border border-wood-400/40 text-wood-200 hover:bg-wood-700/30 font-medium px-6 py-3 rounded-xl transition-all"
+                className="inline-flex items-center gap-2 border border-neutral-700 hover:border-neutral-600 bg-neutral-900/60 hover:bg-neutral-800 text-neutral-300 font-medium text-sm px-5 py-2.5 rounded-lg transition-colors"
               >
-                Our Products
+                View Specifications
               </Link>
             </div>
-          </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-            className="hidden lg:flex items-center justify-center"
-          >
-            <div className="relative">
-              <div className="w-80 h-80 rounded-full bg-gradient-to-br from-wood-500/20 to-forest-400/20 animate-pulse" />
-              <div className="absolute inset-4 w-72 h-72 rounded-full bg-gradient-to-br from-wood-400/10 to-forest-300/10 backdrop-blur-3xl flex items-center justify-center">
-                <div className="text-center">
-                  <Image
-                    src="/images/logo.png"
-                    alt="Salaar Pallet Solutions"
-                    width={160}
-                    height={160}
-                    className="rounded-full opacity-60 mx-auto"
-                  />
-                  <div className="text-wood-400/60 text-sm mt-4">Salaar Pallet Solutions</div>
-                </div>
+            {/* Quick Fact Metrics Strip */}
+            <div className="grid grid-cols-3 gap-6 mt-10 pt-8 border-t border-neutral-800/80 text-xs">
+              <div>
+                <div className="font-mono text-sm font-semibold text-neutral-100">4-Way</div>
+                <div className="text-neutral-400 mt-0.5">Forklift Entry</div>
+              </div>
+              <div>
+                <div className="font-mono text-sm font-semibold text-neutral-100">2,000 kg</div>
+                <div className="text-neutral-400 mt-0.5">Dynamic Load</div>
+              </div>
+              <div>
+                <div className="font-mono text-sm font-semibold text-neutral-100">24-48h</div>
+                <div className="text-neutral-400 mt-0.5">Karachi Dispatch</div>
               </div>
             </div>
-          </motion.div>
+          </div>
+
+          {/* Right Column: Authentic Technical Pallet Blueprint Card */}
+          <div className="lg:col-span-5">
+            <div className="rounded-xl border border-neutral-800 bg-[#17181c] shadow-2xl overflow-hidden">
+              {/* Card Header & Material Selector */}
+              <div className="flex items-center justify-between border-b border-neutral-800 px-4 py-3 bg-[#131417]">
+                <div className="flex items-center gap-2">
+                  <Layers size={15} className="text-neutral-400" />
+                  <span className="text-xs font-medium text-neutral-300">Spec Blueprint</span>
+                </div>
+                <div className="flex items-center rounded-md bg-neutral-900 p-0.5 border border-neutral-800 text-xs">
+                  <button
+                    onClick={() => setActiveTab("wood")}
+                    className={`px-2.5 py-1 rounded font-medium transition-colors ${
+                      activeTab === "wood"
+                        ? "bg-neutral-700 text-white shadow-xs"
+                        : "text-neutral-400 hover:text-neutral-200"
+                    }`}
+                  >
+                    Pine Timber
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("plastic")}
+                    className={`px-2.5 py-1 rounded font-medium transition-colors ${
+                      activeTab === "plastic"
+                        ? "bg-neutral-700 text-white shadow-xs"
+                        : "text-neutral-400 hover:text-neutral-200"
+                    }`}
+                  >
+                    HDPE Polymer
+                  </button>
+                </div>
+              </div>
+
+              {/* Product Visual Container */}
+              <div className="relative h-48 bg-neutral-900/60 flex items-center justify-center p-4 border-b border-neutral-800/80">
+                <Image
+                  src={activeTab === "wood" ? "/images/wooden-pallets.png" : "/images/plastic-pallets.png"}
+                  alt={activeTab === "wood" ? "Standard Wooden Pallet" : "Industrial HDPE Plastic Pallet"}
+                  fill
+                  className="object-contain p-3"
+                  sizes="(max-width: 768px) 100vw, 400px"
+                />
+                <span className="absolute bottom-2 left-3 font-mono text-[10px] text-neutral-400 bg-black/60 px-2 py-0.5 rounded border border-neutral-800">
+                  {activeTab === "wood" ? "SPEC: SP-1210-WD (HEAVY DUTY)" : "SPEC: SP-1210-PL (HYGIENIC)"}
+                </span>
+              </div>
+
+              {/* Technical Specifications Matrix */}
+              <div className="p-4 space-y-2.5 text-xs">
+                <div className="flex justify-between items-center py-1 border-b border-neutral-800/60">
+                  <span className="text-neutral-400">Dimensions</span>
+                  <span className="font-mono text-neutral-200">1200 × 1000 × 144 mm</span>
+                </div>
+                <div className="flex justify-between items-center py-1 border-b border-neutral-800/60">
+                  <span className="text-neutral-400">Dynamic Load</span>
+                  <span className="font-mono text-neutral-200">
+                    {activeTab === "wood" ? "1,500 – 2,000 kg" : "1,200 – 1,500 kg"}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center py-1 border-b border-neutral-800/60">
+                  <span className="text-neutral-400">Static Rating</span>
+                  <span className="font-mono text-neutral-200">
+                    {activeTab === "wood" ? "4,000 kg" : "4,500 kg"}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center py-1 border-b border-neutral-800/60">
+                  <span className="text-neutral-400">Forklift Access</span>
+                  <span className="font-mono text-neutral-200">4-Way Entry (All Sides)</span>
+                </div>
+                <div className="flex justify-between items-center pt-1">
+                  <span className="text-neutral-400">Compliance</span>
+                  <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-400">
+                    <Check size={13} /> {activeTab === "wood" ? "ISPM-15 Heat Treated" : "Food Grade / Washable"}
+                  </span>
+                </div>
+              </div>
+
+              {/* Card Footer Action */}
+              <div className="p-3 bg-[#131417] border-t border-neutral-800 flex items-center justify-between">
+                <span className="text-[11px] text-neutral-400">Custom lengths &amp; notch cuts available</span>
+                <Link
+                  href={activeTab === "wood" ? "/wooden-pallets" : "/plastic-pallets"}
+                  className="text-xs font-medium text-wood-400 hover:text-wood-300 transition-colors inline-flex items-center gap-1"
+                >
+                  Full Sheet <ArrowRight size={13} />
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

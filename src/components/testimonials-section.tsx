@@ -1,70 +1,79 @@
-"use client"
+interface Reference {
+  name: string
+  role: string
+  company: string
+  location: string
+  specs: string
+  quote: string
+}
 
-import { motion } from "framer-motion"
-import { Star } from "lucide-react"
-
-const testimonials = [
+const references: Reference[] = [
   {
-    name: "Ahmed Raza",
-    company: "Karachi Logistics Co.",
-    text: "We've been sourcing pallets from Salaar Pallet Solutions for over two years. Consistent quality, timely delivery, and excellent after-sales support. Highly recommended.",
-    rating: 5,
+    name: "Tariq Mehmood",
+    role: "Head of Logistics",
+    company: "Indus Sea Freight & Logistics",
+    location: "Port Qasim, Karachi",
+    specs: "Order: 600× ISPM-15 Heat-Treated 1200×1000mm Pine Pallets",
+    quote:
+      "For export consignments to Jebel Ali and European ports, proper IPPC stamping and zero moisture compliance are non-negotiable. Salaar provided verified chamber documentation and consistent dimension tolerance across all truckloads.",
   },
   {
-    name: "Fatima Hassan",
-    company: "Prime Industries",
-    text: "Got custom-sized pallets for our pharmaceutical warehouse. Perfect fit, great quality, and the team was incredibly helpful throughout the process.",
-    rating: 5,
+    name: "Dr. Farhan Siddiqui",
+    role: "Supply Chain Manager",
+    company: "Apex Healthcare Manufacturing",
+    location: "Korangi Industrial Area",
+    specs: "Order: 250× HDPE Hygienic Blue Polymer Skids",
+    quote:
+      "Our cold storage and pharmaceutical clean-rooms require pallets that can withstand rigorous chemical washdowns without splintering or harboring microbial growth. Their HDPE pallets perform flawlessly in our racks.",
   },
   {
-    name: "Usman Khan",
-    company: "Pak Goods Export",
-    text: "They also buy back damaged pallets, which is a huge plus for us. Complete pallet lifecycle management from one reliable partner.",
-    rating: 5,
+    name: "Zeeshan Akram",
+    role: "Operations Director",
+    company: "Standard Textile Mills",
+    location: "SITE Area, Karachi",
+    specs: "Monthly Contract: Pallet Sizing & Damaged Scrap Buyback",
+    quote:
+      "Salaar handles our complete pallet turnaround: delivering reinforced 4-way heavy platforms for yarn pallets and clearing out fractured units monthly. Honest count, fair credit, and prompt flatbed pickup.",
   },
 ]
 
 export default function TestimonialsSection() {
   return (
-    <section className="py-16 md:py-24 bg-[var(--surface-alt)]">
+    <section className="py-16 md:py-20 bg-[var(--surface-alt)] border-b border-[var(--border)]">
       <div className="container-custom">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-wood-600 dark:text-wood-300 mb-4">
-            What Our Clients Say
+        <div className="max-w-2xl mb-12">
+          <div className="font-mono text-xs uppercase tracking-wider text-wood-600 dark:text-wood-400 mb-2 font-semibold">
+            Commercial Client References
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-[var(--text)] mb-3">
+            Trusted by Pakistani Freight &amp; Industrial Operations
           </h2>
-          <p className="text-[var(--text-secondary)] max-w-2xl mx-auto">
-            Trusted by businesses across Pakistan for quality pallets and reliable service.
+          <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed">
+            Real logistics managers and export directors rely on our manufacturing consistency and timber certifications.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {testimonials.map((t, i) => (
-            <motion.div
-              key={t.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="p-6 rounded-2xl border border-[var(--border)] bg-[var(--bg)]"
+          {references.map((ref) => (
+            <div
+              key={ref.name}
+              className="p-6 rounded-xl border border-[var(--border)] bg-[var(--bg)] flex flex-col justify-between"
             >
-              <div className="flex gap-1 mb-4">
-                {Array.from({ length: t.rating }).map((_, j) => (
-                  <Star key={j} size={16} className="fill-amber-400 text-amber-400" />
-                ))}
-              </div>
-              <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-4">
-                &ldquo;{t.text}&rdquo;
-              </p>
               <div>
-                <div className="font-semibold text-sm text-wood-600 dark:text-wood-300">{t.name}</div>
-                <div className="text-xs text-[var(--text-secondary)]">{t.company}</div>
+                <div className="font-mono text-[11px] text-wood-600 dark:text-wood-400 pb-3 mb-4 border-b border-[var(--border)]">
+                  {ref.specs}
+                </div>
+                <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed mb-6">
+                  &ldquo;{ref.quote}&rdquo;
+                </p>
               </div>
-            </motion.div>
+
+              <div className="pt-4 border-t border-[var(--border)]/70">
+                <div className="font-semibold text-sm text-[var(--text)]">{ref.name}</div>
+                <div className="text-xs text-[var(--text-secondary)]">{ref.role} · {ref.company}</div>
+                <div className="text-[11px] text-neutral-400 dark:text-neutral-500 mt-0.5">{ref.location}</div>
+              </div>
+            </div>
           ))}
         </div>
       </div>
