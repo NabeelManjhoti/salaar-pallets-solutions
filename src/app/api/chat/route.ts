@@ -9,29 +9,57 @@ import prisma from "@/lib/prisma"
 export const maxDuration = 30
 
 function getGeminiApiKey(): string | null {
-  return (
-    process.env.GOOGLE_GENERATIVE_AI_API_KEY ||
-    process.env.GEMINI_API_KEY ||
-    null
-  )
+  const key = process.env.GOOGLE_GENERATIVE_AI_API_KEY || process.env.GEMINI_API_KEY || null
+  if (!key) return null
+  const clean = key.trim()
+  if (clean.length < 25) return null
+  if (clean.includes("your-") || clean.includes("placeholder") || clean.includes("example")) return null
+  return clean
 }
 
 function generateDeterministicAnswer(query: string, contextChunks: { category: string | null; content: string }[]): string {
-  const q = query.toLowerCase()
+  const q = query.toLowerCase().trim()
 
-  // 1. WhatsApp / Price / Quote inquiry
+  // 1. Greetings
+  if (
+    q === "hi" ||
+    q === "hello" ||
+    q === "hey" ||
+    q === "salam" ||
+    q === "aoa" ||
+    q.startsWith("hi ") ||
+    q.startsWith("hello ") ||
+    q.startsWith("hey ") ||
+    q.includes("assalam")
+  ) {
+    return `### Welcome to Salaar Pallet Solutions
+
+Hello! How can our technical desk assist you with industrial pallets today?
+
+We provide:
+- **New Wooden Pallets:** Standard 1200×1000mm and Euro 1200×800mm (ISPM-15 certified heat-treated pine & hardwood).
+- **HDPE Plastic Pallets:** Hygienic, washable skids for food processing, pharmaceutical, and cold storage (-20°C to +60°C).
+- **Custom Pallet Manufacturing:** Custom CAD dimensions and stringer notch depths for heavy equipment or non-standard loads.
+- **Pallet Repair & Reconditioning:** Extending pallet lifecycles at our Baldia Town sawmill.
+- **Scrap Pallet Buyback:** We purchase used and damaged pallets with free flatbed pickup across Karachi.
+
+Feel free to ask about technical dimensions, load ratings, export certificates, or connect directly with our mill dispatch manager on WhatsApp:
+[Chat on WhatsApp (0333 8538388)](https://wa.me/923338538388?text=Hi%20Salaar%20Pallet%20Solutions!%20I%20have%20an%20inquiry.)`
+  }
+
+  // 2. WhatsApp / Price / Quote inquiry
   if (q.includes("price") || q.includes("cost") || q.includes("rate") || q.includes("quote") || q.includes("quotation")) {
     return `### Pallet Quotations & Factory Pricing
 
 Because we manufacture pallets directly at our Baldia Town sawmill, our rates are mill-direct with zero broker markups:
 
-- **Pricing Factors:** Dimensions (e.g. 1200×1000mm standard vs. Euro 1200×800mm), timber selection (Pakistani pine vs. hardwood), load capacity, order volume, and ISPM-15 heat-treatment certification.
-- **Estimated Turnaround:** Commercial quotations are issued within 2 to 4 hours.
+- **Pricing Factors:** Dimensions (e.g. 1200×1000mm standard vs. Euro 1200×800mm), timber selection (Pakistani pine vs. hardwood), dynamic load capacity, order volume, and ISPM-15 heat-treatment certification.
+- **Turnaround:** Commercial quotations are issued within 2 to 4 hours.
 - **Immediate Quotation via WhatsApp:** Click below to send your quantity and dimensions directly to our factory dispatch desk:
   [Chat on WhatsApp (0333 8538388)](https://wa.me/923338538388?text=Hi%20Salaar%20Pallet%20Solutions!%20I%20need%20a%20quotation%20for%20pallets.)`
   }
 
-  // 2. Selling / Scrap / Buyback inquiry
+  // 3. Selling / Scrap / Buyback inquiry
   if (q.includes("sell") || q.includes("buyback") || q.includes("scrap") || q.includes("old") || q.includes("damaged") || q.includes("broken")) {
     return `### Pallet Buyback & Warehouse Clearing
 
@@ -46,7 +74,7 @@ Salaar Pallet Solutions purchases surplus, used, and damaged pallets across Paki
   [Send Photos on WhatsApp (0333 8538388)](https://wa.me/923338538388?text=Hi%20Salaar%20Pallet%20Solutions!%20I%20have%20surplus/damaged%20pallets%20for%20sale.)`
   }
 
-  // 3. Wooden pallets & Dimensions
+  // 4. Wooden pallets & Dimensions
   if (q.includes("wood") || q.includes("pine") || q.includes("size") || q.includes("dimension") || q.includes("ispm") || q.includes("heat")) {
     return `### Wooden Pallet Specifications
 
@@ -62,7 +90,7 @@ Our heavy-duty timber platforms are built for intense warehouse and export condi
 - **Export Certification:** 100% ISPM-15 compliant heat treatment (HT at 56°C core temperature for 30 min) with official IPPC stamping (PK-104) for smooth customs clearance.`
   }
 
-  // 4. Plastic pallets & Hygiene
+  // 5. Plastic pallets & Hygiene
   if (q.includes("plastic") || q.includes("hdpe") || q.includes("hygienic") || q.includes("pharma") || q.includes("food")) {
     return `### Industrial HDPE Plastic Pallets
 
@@ -75,7 +103,7 @@ Engineered for sanitary supply chains requiring high chemical and temperature re
 - **Compliance:** 100% non-porous and washable for pharmaceutical GMP facilities and food processing. Completely exempt from ISPM-15 wood fumigation regulations.`
   }
 
-  // 5. Location & Contact
+  // 6. Location & Contact
   if (q.includes("where") || q.includes("location") || q.includes("address") || q.includes("phone") || q.includes("contact") || q.includes("hours")) {
     return `### Factory Location & Contact Info
 
@@ -90,9 +118,9 @@ Engineered for sanitary supply chains requiring high chemical and temperature re
   const contextSummary = contextChunks.map((c) => c.content).join("\n\n")
   return `### Salaar Technical Desk Assistance
 
-Thank you for your inquiry regarding Salaar Pallet Solutions.
+Thank you for contacting Salaar Pallet Solutions.
 
-${contextSummary.slice(0, 500)}...
+${contextSummary.slice(0, 450)}...
 
 For technical drawings, CAD specifications, or immediate price calculations, connect directly with our mill dispatch manager:
 - **Phone & WhatsApp:** [0333 8538388](https://wa.me/923338538388)
@@ -141,10 +169,10 @@ export async function POST(req: Request) {
     const contextChunks = await retrieveRelevantContext(sanitizedQuery, 3)
     const context = contextChunks.map((c) => `[${c.category?.toUpperCase() || "INFO"}] ${c.content}`).join("\n\n")
 
-    // 2. Check for Gemini API Key
+    // 2. Check for Valid Gemini API Key
     const apiKey = getGeminiApiKey()
 
-    // 3. Fallback execution if API key is not provisioned
+    // 3. Fallback execution if API key is not valid / configured
     if (!apiKey) {
       const answer = generateDeterministicAnswer(sanitizedQuery, contextChunks)
       const stream = createUIMessageStream({
@@ -155,7 +183,7 @@ export async function POST(req: Request) {
       return createUIMessageStreamResponse({ stream })
     }
 
-    // 4. Full Gemini LLM Execution with Tools
+    // 4. Gemini Execution wrapped inside createUIMessageStream with Safe Error Interception
     const google = createGoogleGenerativeAI({ apiKey })
 
     const system = `You are Salaar Technical Desk, the professional AI assistant for Salaar Pallet Solutions, a premier industrial pallet manufacturer based in Baldia Town 4/5, Timber Market, Karachi, Pakistan.
@@ -187,84 +215,113 @@ ${context}`
       return { role, content }
     })
 
-    try {
-      const result = streamText({
-        model: google("gemini-1.5-flash"),
-        system,
-        messages: modelMessages as ModelMessage[],
-        tools: {
-          generateWhatsAppQuoteLink: tool({
-            description: "Generate a pre-filled direct WhatsApp communication link for an instant pallet quotation.",
-            inputSchema: z.object({
-              palletType: z.string().describe("Pallet type e.g. Wooden 1200x1000, HDPE Plastic, Scrap Buyback"),
-              quantity: z.string().optional().describe("Quantity needed or for sale"),
-              destination: z.string().optional().describe("Delivery city or Karachi area"),
-            }),
-            execute: async ({ palletType, quantity, destination }) => {
-              const text = encodeURIComponent(
-                `Hi Salaar Pallet Solutions! I need a quote for: ${palletType}${quantity ? ` (${quantity} units)` : ""}${destination ? ` to ${destination}` : ""}.`
-              )
-              return {
-                url: `https://wa.me/923338538388?text=${text}`,
-                phone: "0333 8538388",
-                message: `Click to chat directly with our dispatch manager on WhatsApp for ${palletType}.`,
-              }
+    const stream = createUIMessageStream({
+      execute: async ({ writer }) => {
+        try {
+          const result = streamText({
+            model: google("gemini-1.5-flash"),
+            system,
+            messages: modelMessages as ModelMessage[],
+            tools: {
+              generateWhatsAppQuoteLink: tool({
+                description: "Generate a pre-filled direct WhatsApp communication link for an instant pallet quotation.",
+                inputSchema: z.object({
+                  palletType: z.string().describe("Pallet type e.g. Wooden 1200x1000, HDPE Plastic, Scrap Buyback"),
+                  quantity: z.string().optional().describe("Quantity needed or for sale"),
+                  destination: z.string().optional().describe("Delivery city or Karachi area"),
+                }),
+                execute: async ({ palletType, quantity, destination }) => {
+                  const text = encodeURIComponent(
+                    `Hi Salaar Pallet Solutions! I need a quote for: ${palletType}${quantity ? ` (${quantity} units)` : ""}${destination ? ` to ${destination}` : ""}.`
+                  )
+                  return {
+                    url: `https://wa.me/923338538388?text=${text}`,
+                    phone: "0333 8538388",
+                    message: `Click to chat directly with our dispatch manager on WhatsApp for ${palletType}.`,
+                  }
+                },
+              }),
+              submitInquiry: tool({
+                description: "Submit a customer quotation inquiry directly to the Salaar Pallet Solutions admin database.",
+                inputSchema: z.object({
+                  name: z.string().describe("Customer's name"),
+                  phone: z.string().describe("Customer's phone or WhatsApp number"),
+                  email: z.string().optional().describe("Customer's email address"),
+                  serviceInterest: z.enum([
+                    "wooden-pallets",
+                    "plastic-pallets",
+                    "custom-pallets",
+                    "pallet-repair",
+                    "sell-pallets",
+                    "other",
+                  ]),
+                  message: z.string().describe("Order requirements, dimensions, and quantities"),
+                }),
+                execute: async ({ name, phone, email, serviceInterest, message }) => {
+                  try {
+                    const inquiry = await prisma.contactInquiry.create({
+                      data: {
+                        name,
+                        phone,
+                        email: email || "inquiry@chat.salaarpallets.com",
+                        serviceInterest,
+                        message: `[Inquiry via AI Chat]: ${message}`,
+                      },
+                    })
+                    return {
+                      success: true,
+                      inquiryId: inquiry.id,
+                      message: `Your inquiry for ${serviceInterest.replace("-", " ")} has been registered. Our Karachi team will contact you at ${phone}.`,
+                    }
+                  } catch {
+                    return {
+                      success: false,
+                      message: "Could not write to database directly. Please message on WhatsApp at 0333 8538388.",
+                    }
+                  }
+                },
+              }),
             },
-          }),
-          submitInquiry: tool({
-            description: "Submit a customer quotation inquiry directly to the Salaar Pallet Solutions admin database.",
-            inputSchema: z.object({
-              name: z.string().describe("Customer's name"),
-              phone: z.string().describe("Customer's phone or WhatsApp number"),
-              email: z.string().optional().describe("Customer's email address"),
-              serviceInterest: z.enum([
-                "wooden-pallets",
-                "plastic-pallets",
-                "custom-pallets",
-                "pallet-repair",
-                "sell-pallets",
-                "other",
-              ]),
-              message: z.string().describe("Order requirements, dimensions, and quantities"),
-            }),
-            execute: async ({ name, phone, email, serviceInterest, message }) => {
-              try {
-                const inquiry = await prisma.contactInquiry.create({
-                  data: {
-                    name,
-                    phone,
-                    email: email || "inquiry@chat.salaarpallets.com",
-                    serviceInterest,
-                    message: `[Inquiry via AI Chat]: ${message}`,
-                  },
-                })
-                return {
-                  success: true,
-                  inquiryId: inquiry.id,
-                  message: `Your inquiry for ${serviceInterest.replace("-", " ")} has been registered. Our Karachi team will contact you at ${phone}.`,
-                }
-              } catch {
-                return {
-                  success: false,
-                  message: "Could not write to database directly. Please message on WhatsApp at 0333 8538388.",
-                }
-              }
-            },
-          }),
-        },
-      })
+          })
 
-      return result.toUIMessageStreamResponse()
-    } catch (llmErr) {
-      console.warn("Gemini stream error, falling back to deterministic knowledge engine:", llmErr)
-      const answer = generateDeterministicAnswer(sanitizedQuery, contextChunks)
-      const stream = createUIMessageStream({
-        execute: ({ writer }) => {
-          writer.write({ type: "text-delta", id: "salaar-desk-msg", delta: answer })
-        },
-      })
-      return createUIMessageStreamResponse({ stream })
-    }
+          const uiStream = result.toUIMessageStream()
+          const reader = uiStream.getReader()
+
+          let hasSentText = false
+
+          while (true) {
+            const { done, value } = await reader.read()
+            if (done) break
+
+            // Intercept internal stream error chunk
+            if (value.type === "error") {
+              throw new Error(value.errorText || "Upstream AI generation failed")
+            }
+
+            if (value.type === "text-delta" && value.delta) {
+              hasSentText = true
+            }
+
+            writer.write(value)
+          }
+
+          // If stream ended without sending any text, fallback
+          if (!hasSentText) {
+            throw new Error("Empty text generation from model")
+          }
+        } catch (streamErr) {
+          console.warn("Caught Gemini stream failure, delivering safe knowledge fallback:", streamErr)
+          const fallbackAnswer = generateDeterministicAnswer(sanitizedQuery, contextChunks)
+          writer.write({
+            type: "text-delta",
+            id: "salaar-fallback-msg",
+            delta: fallbackAnswer,
+          })
+        }
+      },
+    })
+
+    return createUIMessageStreamResponse({ stream })
   } catch (error) {
     console.error("Chat API unhandled error:", error)
     return NextResponse.json({ error: "An internal error occurred" }, { status: 500 })
